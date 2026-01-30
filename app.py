@@ -41,11 +41,9 @@ class FeatureData(BaseModel):
 @app.post("/predict")
 def predict_user(data: FeatureData):
     try:
-        # 1. Extract values in the specific order your model expects
         feature_dict = data.dict()
         ordered_features = [feature_dict[key] for key in FEATURE_KEYS]
         
-        # 2. Process and Predict
         input_data = np.array(ordered_features).reshape(1, -1)
         data_scaled = scaler.transform(input_data)
         
